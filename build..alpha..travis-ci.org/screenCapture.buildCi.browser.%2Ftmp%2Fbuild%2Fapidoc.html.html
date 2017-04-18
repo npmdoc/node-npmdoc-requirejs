@@ -62,6 +62,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.requirejs.requirejs">
+            function <span class="apidocSignatureSpan"></span>requirejs
+            <span class="apidocSignatureSpan">(deps, callback, errback, optional)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.requirejs.config">
             function <span class="apidocSignatureSpan">requirejs.</span>config
             <span class="apidocSignatureSpan">(config)</span>
@@ -308,6 +317,53 @@
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.requirejs" id="apidoc.module.requirejs">module requirejs</a></h1>
 
+
+
+
+    <h2>
+        <a href="#apidoc.element.requirejs.requirejs" id="apidoc.element.requirejs.requirejs">
+        function <span class="apidocSignatureSpan"></span>requirejs
+        <span class="apidocSignatureSpan">(deps, callback, errback, optional)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">requirejs = function (deps, callback, errback, optional) {
+
+    //Find the right context, use default
+    var context, config,
+        contextName = defContextName;
+
+    // Determine if have config object in the call.
+    if (!isArray(deps) &amp;&amp; typeof deps !== 'string') {
+        // deps is a config object
+        config = deps;
+        if (isArray(callback)) {
+            // Adjust args if there are dependencies
+            deps = callback;
+            callback = errback;
+            errback = optional;
+        } else {
+            deps = [];
+        }
+    }
+
+    if (config &amp;&amp; config.context) {
+        contextName = config.context;
+    }
+
+    context = getOwn(contexts, contextName);
+    if (!context) {
+        context = contexts[contextName] = req.s.newContext(contextName);
+    }
+
+    if (config) {
+        context.configure(config);
+    }
+
+    return context.require(deps, callback, errback);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
 
 
 
